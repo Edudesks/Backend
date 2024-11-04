@@ -86,6 +86,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': config('PGDATABASE'),
+    #     'USER': config('PGUSER'),
+    #     'PASSWORD': config('PGPASSWORD'),
+    #     'HOST': config('PGHOST'),
+    #     'PORT': config('PGPORT', 5432),
+    #     'OPTIONS': {
+    #     'sslmode': 'require',
+    #     },
+    # }
 }
 
 

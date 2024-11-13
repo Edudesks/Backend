@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 import os
 from dotenv import load_dotenv
@@ -35,6 +36,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'authentication.User' 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig',
+    'authentication.apps.AuthenticationConfig',
     'drf_yasg',
 
 ]
@@ -86,6 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+
 
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
@@ -145,6 +149,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #------My setings------
 
 # Swagger Settings
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'authentication.permissions.IsAuthenticatedCustom',
+    ],
+}
+
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         "Bearer": {
@@ -160,3 +171,28 @@ SWAGGER_SETTINGS = {
 REDOC_SETTINGS = {
    'LAZY_RENDERING': False,
 }
+
+REST_FRAMEWORK = {
+    'NON_FIELD_ERRORS_KEY' : 'error',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 5,
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+}
+CORS_ALLOW_ALL_ORIGINS = True
+
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'timileyinadesina1@gmail.com' 
+

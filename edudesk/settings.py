@@ -88,22 +88,20 @@ WSGI_APPLICATION = 'edudesk.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-# if DEBUG == True:
+if DEBUG == True:
 
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.sqlite3',
+             'NAME': BASE_DIR / 'db.sqlite3',
+         }
+     }
+else:
+  DATABASES = {
 
-    
-#     }
-# else:
-DATABASES = {
-
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+      'default': dj_database_url.config(
+          default=os.environ.get('DATABASE_URL')
+      )
 
 
     # 'default': {
